@@ -3,26 +3,29 @@ import java.net.*;
 
 class MyClient
 {
-	Socket s = null;
-	DataInputStream din = null;
+	private final int SERVER_SOCKET_PORT = 5000;
+	private Socket s = null;
+	private DataInputStream din = null;
 	MyClient()
 	{
 		try
 		{
-			s = new Socket("localhost", 5000);
+			s = new Socket("localhost", SERVER_SOCKET_PORT);
 			din = new DataInputStream(s.getInputStream());
 			startChat();
 		}
-		catch(Exception e){}
+		catch(Exception e){
+			System.out.println("Couldn't connect to server.... Exiting.");
+		}
 	}
 	
-	void startChat()throws IOException
+	public void startChat()throws IOException
 	{
 			while(true)
 			{
 				String logs = din.readUTF();
 				if(logs.compareTo("") != 0){
-					System.out.println("SERVER : "+ logs);
+					System.out.println(logs);
 				}
 			}
 	}

@@ -3,29 +3,29 @@ import java.net.*;
 
 class MyServer
 {
-	ServerSocket ss;
-	Socket s;
-	// DataInputStream din;
-	DataOutputStream dout;
-	MyServer()
+	private final int SERVER_SOCKET_PORT = 5000;
+	private ServerSocket ss;
+	private Socket s;
+	private DataOutputStream dout;
+	MyServer(String filePath)
 	{
 		System.out.println("SERVER STARTED..WAITING FOR CLIENT..");
 		try
 		{
-			ss = new ServerSocket(5000);	//specific port is the argument
-			s=ss.accept();				//to establish a connection
-			System.out.println("SOCKET CONNECTED : "+s);
+			ss = new ServerSocket(SERVER_SOCKET_PORT);	//specific port is the argument
+			s = ss.accept();				//to establish a connection
+			System.out.println("SOCKET CONNECTED : " + s);
 			dout=new DataOutputStream(s.getOutputStream());
-			startChat();
+			startChat(filePath);
 		}
 		catch(Exception e)
 		{}
 	}//constructor
 	
-	void startChat()throws IOException
+	public void startChat(String filePath)throws IOException
 	{
 		String str = null;
-		File file = new File("/Users/mohib/dev/housing.projects/log/development.log");
+		File file = new File(filePath);
 		FileReader fr = new FileReader(file);
 		BufferedReader readFile = new BufferedReader(fr);
 		String [] lines = new String[10];
@@ -49,13 +49,8 @@ class MyServer
 		}
 	}
 
-	String getOutputLines(String [] lines, int count){
+	public String getOutputLines(String [] lines, int count){
 		String dumpString = "";
-		if(count > 0){
-			System.out.println("COUNT after reading:" + count);
-			System.out.println(count);
-			System.out.println(lines[0]);
-		}
 		if(count >=10){
 			for(int i=0;i<10;i++){
 				dumpString += lines[i];
@@ -73,6 +68,9 @@ class MyServer
 	
 	public static void main(String... s)
 	{
-		new MyServer();
+		if(s.length == 0)
+			System.out.println("No file path provided...please provide a file path");
+		else
+			new MyServer(s[0]);
 	}
 }
