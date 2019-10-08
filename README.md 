@@ -1,0 +1,4 @@
+Steps to run
+ 1. Open Two terminals
+ 2. run <java MyServer> <absolute path of log file> on first terminal.
+ 3. run <java MyClient> on second terminal.
