@@ -51,8 +51,14 @@ class MyServer
 
 	public String getOutputLines(String [] lines, int count){
 		String dumpString = "";
-		if(count >=10){
-			for(int i=0;i<10;i++){
+		// handling first case
+		if(count > 10){
+			count = count % 10;
+			for(int i=count;i<10;i++){
+				dumpString += lines[i];
+				dumpString += "\n";
+			}
+			for(int i = 0; i<count;i++){
 				dumpString += lines[i];
 				dumpString += "\n";
 			}
