@@ -4,6 +4,7 @@ import java.net.*;
 class MyServer
 {
 	private final int SERVER_SOCKET_PORT = 5000;
+	private final int BUFFER_SIZE = 10;
 	private ServerSocket ss;
 	private Socket s;
 	private DataOutputStream dout;
@@ -28,7 +29,7 @@ class MyServer
 		File file = new File(filePath);
 		FileReader fr = new FileReader(file);
 		BufferedReader readFile = new BufferedReader(fr);
-		String [] lines = new String[10];
+		String [] lines = new String[BUFFER_SIZE];
 
 		int count = 0;
 		String line = null;
@@ -40,7 +41,7 @@ class MyServer
 		while(true)
 		{	
 			count = 0;
-			while (count != 10 && (line = readFile.readLine()) != null) {
+			while (count != BUFFER_SIZE && (line = readFile.readLine()) != null) {
 				lines[count % lines.length] = line;
 		    	count++;
 			}
@@ -52,9 +53,9 @@ class MyServer
 	public String getOutputLines(String [] lines, int count){
 		String dumpString = "";
 		// handling first case
-		if(count > 10){
-			count = count % 10;
-			for(int i=count;i<10;i++){
+		if(count > BUFFER_SIZE){
+			count = count % BUFFER_SIZE;
+			for(int i=count;i<BUFFER_SIZE;i++){
 				dumpString += lines[i];
 				dumpString += "\n";
 			}
